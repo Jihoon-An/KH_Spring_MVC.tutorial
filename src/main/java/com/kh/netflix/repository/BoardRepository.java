@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class BoardRepository {
@@ -49,15 +50,32 @@ public class BoardRepository {
     }
 
     public void insert(BoardDTO board) throws SQLException {
-        String sql = "INSERT INTO FREEBOARD VALUES(FREEBOARD_SEQ.NEXTVAL, ?, ?, ?, SYSDATE, 0)";
+        String sql = "INSERT INTO FREEBOARD VALUES(?, ?, ?, ?, SYSDATE, 0)";
         try (Connection con = dataSource.getConnection();
              PreparedStatement statement = con.prepareStatement(sql)) {
 
-            statement.setString(1, board.getWriter());
-            statement.setString(2, board.getTitle());
-            statement.setString(3, board.getContent());
+            statement.setInt(1, board.getFreeBoard_seq());
+            statement.setString(2, board.getWriter());
+            statement.setString(3, board.getTitle());
+            statement.setString(4, board.getContent());
 
             statement.executeUpdate();
         }
+    }
+
+    public int getNewSeq() throws SQLException {
+        Optional<Integer> seq = Optional.empty();
+
+        String sql = "SELECT FREEBOARD_SEQ.NEXTVAL AS SEQ FROM DUAL";
+        try (Connection con = dataSource.getConnection();
+             PreparedStatement statement = con.prepareStatement(sql);
+             ResultSet resultSet = statement.executeQuery();) {
+
+            if(resultSet.next()){
+                seq = Optional.of(resultSet.getInt("seq"));
+            }
+            return seq.orElse(0);
+        }
+
     }
 }

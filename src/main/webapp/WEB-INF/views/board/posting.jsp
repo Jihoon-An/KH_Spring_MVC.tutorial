@@ -57,7 +57,7 @@
                 <h1 class="font-yeonsung">글 작성</h1>
             </div>
         </div>
-        <form method="post" action="/board/posting">
+        <form method="post" action="/board/posting" enctype="multipart/form-data">
             <div id="postCont" class="container">
                 <div class="row justify-content-center">
                     <div class="col-6">

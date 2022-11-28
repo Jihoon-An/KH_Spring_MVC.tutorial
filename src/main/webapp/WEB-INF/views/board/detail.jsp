@@ -135,8 +135,8 @@
     </div>
     <div class="col-10">
       <c:forEach var="file" items="${files}">
-        <div><a href="/download.file?sysName=${file.sysName}&originName=${file.originName}">${file.outNum}.
-            ${file.originName}</a></div>
+        <div><a href="/board/fileDownload?sysName=${file.sys_name}&originName=${file.origin_name}">${file.file_seq}.
+            ${file.origin_name}</a></div>
       </c:forEach>
     </div>
     <textarea class="col-12" id="postContent" readonly>${post.content}</textarea>
