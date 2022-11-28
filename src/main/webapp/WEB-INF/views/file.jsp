@@ -28,7 +28,7 @@
 <body>
 <form action="/fileUpload" method="post" enctype="multipart/form-data">
     <input type="text" name="message">
-    <input type="file" name="file" multiple>
+    <input type="file" name="files" multiple>
     <button>업로드</button>
 </form>
 </body>

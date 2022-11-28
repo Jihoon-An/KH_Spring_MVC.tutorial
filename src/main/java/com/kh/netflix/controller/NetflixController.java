@@ -1,6 +1,6 @@
 package com.kh.netflix.controller;
 
-import com.kh.netflix.dao.MovieRepository;
+import com.kh.netflix.repository.MovieRepository;
 import com.kh.netflix.dto.MoviesDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

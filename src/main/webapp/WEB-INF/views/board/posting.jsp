@@ -75,7 +75,6 @@
                             <div class="col-10" id="fileInput"></div>
                         </div>
                         <script>
-                            let count = 0;
                             $("#fileAdd").on("click", function () {
                                 if ($("input[type=file]").length > 4) {
                                     alert("배불러!");
@@ -87,7 +86,7 @@
 
                                 let inputFile = $("<input>");
                                 inputFile.attr("type", "file");
-                                inputFile.attr("name", "file" + count++);
+                                inputFile.attr("name", "files");
                                 inputFile.addClass("form-control m-0");
 
                                 let delBtn = $("<button>");

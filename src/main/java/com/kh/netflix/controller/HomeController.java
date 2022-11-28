@@ -24,67 +24,73 @@ import javax.servlet.http.HttpSession;
 @Controller
 public class HomeController {
 
-	@Autowired
-	HttpSession session;
+    @Autowired
+    HttpSession session;
 
-	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+    private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 
-	/**
-	 * Simply selects the home view to render by returning its name.
-	 */
-	@RequestMapping("/")
-	public String home(Locale locale, Model model) throws Exception{
-		logger.info("Welcome home! The client locale is {}.", locale);
+    /**
+     * Simply selects the home view to render by returning its name.
+     */
+    @RequestMapping("/")
+    public String home(Locale locale, Model model) throws Exception {
+        logger.info("Welcome home! The client locale is {}.", locale);
 
-		Date date = new Date();
-		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
+        Date date = new Date();
+        DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
 
-		String formattedDate = dateFormat.format(date);
+        String formattedDate = dateFormat.format(date);
 
-		model.addAttribute("serverTime", formattedDate);
+        model.addAttribute("serverTime", formattedDate);
 
-		return "home";
-	}
+        return "home";
+    }
 
-	@RequestMapping("/toSignUp")
-	public String toSignUp(){
-		return "netflix/signup";
-	}
+    @RequestMapping("/toSignUp")
+    public String toSignUp() {
+        return "netflix/signup";
+    }
 
-	@RequestMapping("/toLogIn")
-	public String toLogIn(){
-		return "netflix/login";
-	}
+    @RequestMapping("/toLogIn")
+    public String toLogIn() {
+        return "netflix/login";
+    }
 
-	@RequestMapping("/toFile")
-	public String toFile(){
-		return "file";
-	}
+    @RequestMapping("/toFile")
+    public String toFile() {
+        return "file";
+    }
 
-	@RequestMapping("/fileUpload")
-	public String fileUpload(String message, MultipartFile[] file) throws IOException {
+    @RequestMapping("/fileUpload")
+    public String fileUpload(String message, MultipartFile[] files) throws IOException {
 
-		// 경로 지정
-		String realPath = session.getServletContext().getRealPath("upload");
+        // 경로 지정
+        String realPath = session.getServletContext().getRealPath("upload");
 
-		// 폴더 생성
-		File filePath = new File(realPath);
-		if (!filePath.exists()) {
-			filePath.mkdir();
-		}
+        // 폴더 생성
+        File filePath = new File(realPath);
+        if (!filePath.exists()) {
+            filePath.mkdir();
+        }
 
-		// 파일 이름 설정
-		String orgName = file[0].getOriginalFilename();
-		String sysName = UUID.randomUUID() + "_" + orgName;
+        for (MultipartFile file : files) {
+            if (file.getOriginalFilename() == null) {
+                continue; // file이 빈 파일이라면 패스
+            }
+            // 파일 이름 설정
+            String orgName = file.getOriginalFilename();
+            String sysName = UUID.randomUUID() + "_" + orgName;
 
-		// 파일 복사
-		file[0].transferTo(new File(filePath+"/"+sysName));
+            // 파일 복사
+            file.transferTo(new File(filePath + "/" + sysName));
+        }
 
-		return "redirect:/";
-	}
-	@ExceptionHandler(Exception.class)
-	public String exceptionHandler(Exception e) {
-		e.printStackTrace();
-		return "error";
-	}
+        return "redirect:/";
+    }
+
+    @ExceptionHandler(Exception.class)
+    public String exceptionHandler(Exception e) {
+        e.printStackTrace();
+        return "error";
+    }
 }

@@ -1,4 +1,4 @@
-package com.kh.netflix.dao;
+package com.kh.netflix.repository;
 
 import com.kh.netflix.dto.MemberDTO;
 import org.springframework.beans.factory.annotation.Autowired;

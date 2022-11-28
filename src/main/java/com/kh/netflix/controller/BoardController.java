@@ -1,12 +1,13 @@
 package com.kh.netflix.controller;
 
-import com.kh.netflix.dao.BoardRepository;
+import com.kh.netflix.repository.BoardRepository;
 import com.kh.netflix.dto.BoardDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
 import java.sql.SQLException;
@@ -47,7 +48,7 @@ public class BoardController {
     }
 
     @RequestMapping("posting")
-    public String posting(BoardDTO board, String title, String content) throws SQLException {
+    public String posting(BoardDTO board, String title, String content, MultipartFile[] file) throws SQLException {
 
         board.setWriter((String) session.getAttribute("loginId"));
 
