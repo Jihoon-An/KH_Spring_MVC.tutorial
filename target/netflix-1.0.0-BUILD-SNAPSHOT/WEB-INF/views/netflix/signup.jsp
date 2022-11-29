@@ -7,9 +7,36 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<html>
 <head>
-    <title>signUp</title>
+    <meta charset="UTF-8">
+    <title>Sign up</title>
+    <link rel="shortcut icon" type="image/x-icon" href="/resource/duck.ico">
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"
+            integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous">
+    </script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT"
+          crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
+            crossorigin="anonymous"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- 폰트 -->
+    <link href="https://fonts.googleapis.com/css2?family=Dongle:wght@700&family=Yeon+Sung&display=swap"
+          rel="stylesheet">
+    <!-- font-family: 'Dongle', sans-serif;  font-family: 'Yeon Sung', cursive; -->
+
+    <!--jQuery-->
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"
+            integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous">
+    </script>
+    <!--bootstrap-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT"
+          crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
+            crossorigin="anonymous"></script>
     <style>
         * {
             box-sizing: border-box;
@@ -34,12 +61,12 @@
                     <span>Sign Up</span>
                 </div>
                 <div class="col-2 text-end">
-                    <a href="/index.jsp"><button type="button" class="btn-close m-3"
+                    <a href="/"><button type="button" class="btn-close m-3"
                                                  aria-label="Close"></button></a>
                 </div>
             </div>
 
-            <form action="signup.member" id="singupForm" method="post">
+            <form action="/member/signUp" id="singupForm" method="post">
                 <script>
                     var idCheck = false;
                     var pwCheck = false;
@@ -75,7 +102,7 @@
                             if (/^\w{6,20}$/.test($("#id").val())) {
                                 //window.open("dupleCheck.member?id=" + $("#id").val(), "", "width=400, height=300")
                                 $.ajax({
-                                    url: "dupleCheck.member",
+                                    url: "/member/dupleCheck",
                                     type: "post",
                                     data: {
                                         id: $("#id").val()
@@ -113,7 +140,7 @@
                     <div class="col">
                         <div class="input-group mb-3">
                             <span class="input-group-text col-3" id="pw1Head">비밀번호</span>
-                            <input name="pw1" id="pw1" type="password" class="form-control"
+                            <input name="pw1 pw" id="pw1" type="password" class="form-control"
                                    placeholder="(필수)" aria-label="Username" aria-describedby="basic-addon1">
                         </div>
                     </div>
@@ -327,7 +354,7 @@
                 <div class="row">
                     <div class="col-6 text-end"><button type="submit" class="btn btn-primary">회원가입</button>
                     </div>
-                    <div class="col-6 text-start"><a href="signup.jsp" class="btn btn-primary">초기화</a>
+                    <div class="col-6 text-start"><a href="/toSignUp" class="btn btn-primary">초기화</a>
                     </div>
                 </div>
             </form>

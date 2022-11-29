@@ -264,6 +264,45 @@
                         </script>
                     </div>
                 </div>
+
+                <div class="row">
+                    <img src="" id="profile_img">
+                </div>
+                <div class="row">
+                    <input type="file" name="profile" id="profile_input" accept=".png, .jpg, .jpeg, .gif">
+                </div>
+                <script>
+                    function fileToBase64(file){
+                        const reader = new FileReader();
+                        reader.readAsDataURL(file);
+                        reader.onload = () => {
+                            console.dir(reader.result);   // base64
+                        }
+                    }
+
+                    $("#profile_input").on("change", function (){
+                        let ext = $("#profile_input").val().split(".").pop().toLowerCase();
+                        console.log(ext);
+
+                        let input = this;
+
+                        let accept = ["png","jpg","jpeg","gif"];
+
+                        let result = $.inArray(ext,accept)
+
+                        console.log(result);
+                        if (result == -1) {
+                            alert("이거 아냐");
+                        } else {
+                            const reader = new FileReader();
+                            reader.readAsDataURL(input.files[0]);
+                            reader.onload = () => {
+                                console.dir(reader.result);   // base64
+                                $("#profile_img").attr("src", reader.result);
+                            }
+                        }
+                    })
+                </script>
             </form>
             <script>
                 let singupForm = document.getElementById("singupForm");

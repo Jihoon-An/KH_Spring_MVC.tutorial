@@ -88,6 +88,14 @@ public class HomeController {
         return "redirect:/";
     }
 
+    @RequestMapping("/testFileUpload")
+    public void testMethod(String message, MultipartFile profileImg){
+
+
+        System.out.println(message);
+
+    }
+
     @ExceptionHandler(Exception.class)
     public String exceptionHandler(Exception e) {
         e.printStackTrace();

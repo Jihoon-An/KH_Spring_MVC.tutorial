@@ -15,6 +15,7 @@
 <a href="/netflix/toOutput">toOutput</a><br>
 <a href="/toSignUp">signUp</a><br>
 <a href="/toLogIn">logIn</a><br>
+<a href="/toFile">file</a><br>
 
 </body>
 </html>

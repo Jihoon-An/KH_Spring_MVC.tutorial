@@ -17,5 +17,11 @@
 <a href="/toLogIn">logIn</a><br>
 <a href="/toFile">file</a><br>
 
+<form action="/testFileUpload" method="post" enctype="multipart/form-data">
+    <input type="text" name="message">
+    <input type="file" name="profileImg">
+    <button>업로드</button>
+</form>
+
 </body>
 </html>

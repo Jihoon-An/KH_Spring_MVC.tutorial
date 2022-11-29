@@ -3,7 +3,6 @@ package com.kh.netflix.dto;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.util.ResourceBundle;
 
 public class MemberDTO {
     private String id;
@@ -11,18 +10,18 @@ public class MemberDTO {
     private String name;
     private String phone;
     private String email;
-    private String zipCode;
+    private String zipcode;
     private String address1;
     private String address2;
     private Timestamp signup_date;
 
-    public MemberDTO(String id, String pw, String name, String phone, String email, String zipCode, String address1, String address2, Timestamp signup_date) {
+    public MemberDTO(String id, String pw, String name, String phone, String email, String zipcode, String address1, String address2, Timestamp signup_date) {
         this.id = id;
         this.pw = pw;
         this.name = name;
         this.phone = phone;
         this.email = email;
-        this.zipCode = zipCode;
+        this.zipcode = zipcode;
         this.address1 = address1;
         this.address2 = address2;
         this.signup_date = signup_date;
@@ -37,7 +36,7 @@ public class MemberDTO {
         this.name = resultSet.getString("name");
         this.phone = resultSet.getString("phone");
         this.email = resultSet.getString("email");
-        this.zipCode = resultSet.getString("zipCode");
+        this.zipcode = resultSet.getString("zipCode");
         this.address1 = resultSet.getString("address1");
         this.address2 = resultSet.getString("address2");
         this.signup_date = resultSet.getTimestamp("signup_date");
@@ -83,12 +82,12 @@ public class MemberDTO {
         this.email = email;
     }
 
-    public String getZipCode() {
-        return zipCode;
+    public String getZipcode() {
+        return zipcode;
     }
 
-    public void setZipCode(String zipCode) {
-        this.zipCode = zipCode;
+    public void setZipcode(String zipcode) {
+        this.zipcode = zipcode;
     }
 
     public String getAddress1() {
