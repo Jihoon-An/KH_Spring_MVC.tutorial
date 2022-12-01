@@ -96,6 +96,17 @@ public class HomeController {
 
     }
 
+    @RequestMapping("/testCode")
+    public void home() {
+    System.out.println("test success!");
+    }
+
+    @RequestMapping("/insert")
+    public String insert(String writer, String message) {
+        System.out.println(writer + " : " + message);
+        return "redirect:/";
+    }
+
     @ExceptionHandler(Exception.class)
     public String exceptionHandler(Exception e) {
         e.printStackTrace();
