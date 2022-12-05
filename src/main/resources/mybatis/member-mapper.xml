@@ -6,11 +6,32 @@
 <mapper namespace="Member">
 
     <insert id="insert">
-        isnert into members values(id_seq.nextval, #{pw})
+        insert into members values(id_seq.nextval, #{pw})
+        <selectKey order="AFTER" keyProperty="id" resultType="int">
+            select id_seq.currval from dual
+        </selectKey>
     </insert>
 
     <select id="selectAll" resultType="com.kh.netflix.dto.MemberDTO">
-        select * from members where id = 'abg1418';
+        select * from members order by 1
+    </select>
+
+    <!-- map을 사용하는 경우 예시 -->
+    <select id="selectByCon" resultType="com.kh.netflix.dto.MemberDTO">
+        select * from members where ${condition} like '%'||#{keyword}||'%'
+    </select>
+
+    <!--검색-->
+    <select id="selectById">
+        select * from member
+        <trim prefix="where" prefixOverrides="and" > <!--접두사로 where을 사용하고 and가 접두사면 and를 지운다.-->
+            <if test="id != null">
+                id like '%'||#{id}||'%'
+            </if>
+            <if test="id != null">
+                and id like '%'||#{id}||'%'
+            </if>
+        </trim>
     </select>
 
     <!--  value가 하나일때는 그냥 value로 써도 된다.  -->

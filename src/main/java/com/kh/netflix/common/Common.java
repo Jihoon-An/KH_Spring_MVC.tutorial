@@ -5,6 +5,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Common {
     /**
@@ -34,4 +36,18 @@ public class Common {
         request.setCharacterEncoding("utf8");
         response.setContentType("text/html;charset=utf8");
     }
+
+
+
+    Map<String, Map<>> order = new HashMap<>();
+
+
+
+
+
+
+
+
+
+
 }

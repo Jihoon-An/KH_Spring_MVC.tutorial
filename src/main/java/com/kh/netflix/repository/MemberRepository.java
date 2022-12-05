@@ -31,6 +31,13 @@ public class MemberRepository {
         return members;
     }
 
+    // custom
+    public List<MemberDTO> selectByCon(){
+        List<MemberDTO> members = db.selectList("Member.selectAll");
+
+        return members;
+    }
+
 
     public void insert(MemberDTO memberDTO) {
         String sql = "insert into members values(?, ?, ?, ?, ?, ?, ?, ?, sysdate)";
