@@ -1,6 +1,7 @@
 package com.kh.netflix.repository;
 
 import com.kh.netflix.dto.MemberDTO;
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -11,6 +12,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -20,6 +22,14 @@ public class MemberRepository {
 
     @Autowired
     private JdbcTemplate jdbc;
+
+    @Autowired
+    private SqlSession db;
+
+    public List<MemberDTO> selectAllByMyBatis() {
+        List<MemberDTO> members = db.selectList("Member.selectAll");
+        return members;
+    }
 
 
     public void insert(MemberDTO memberDTO) {
@@ -40,11 +50,11 @@ public class MemberRepository {
     public MemberDTO selectById(String id) {
         String sql = "select * from members where id=?";
         return jdbc.queryForObject(sql, new RowMapper<MemberDTO>() {
-                    @Override
-                    public MemberDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
-                        return new MemberDTO(rs);
-                    }
-                }, id);
+            @Override
+            public MemberDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
+                return new MemberDTO(rs);
+            }
+        }, id);
     }
 
     public int selectCount() {
