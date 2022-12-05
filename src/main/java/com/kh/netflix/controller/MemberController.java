@@ -1,85 +1,76 @@
 package com.kh.netflix.controller;
 
-import com.kh.netflix.common.Common;
-import com.kh.netflix.repository.MemberRepository;
-import com.kh.netflix.dto.MemberDTO;
+import com.kh.netflix.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 
 @Controller
-@RequestMapping("/member/")
 public class MemberController {
 
     @Autowired
-    private MemberRepository memberRepository;
-    @Autowired
-    private HttpSession session;
 
-    @RequestMapping("/signUp")
-    public String signUp(MemberDTO member) throws Exception {
+    private MemberService service;
 
-        String beforePw = member.getPw();
-        member.setPw(Common.getSHA512(beforePw));
+    @RequestMapping(value="/beginSpring/memberRegister.action", method={RequestMethod.POST})
 
-        memberRepository.insert(member);
+    public String memberRegisterEnd(HttpServletRequest request, ModelAndView mv) {
 
-        return "/";
-    }
+        try {
 
-    @RequestMapping("/dupleCheck")
-    @ResponseBody
-    public String dupleCheck(String id) throws Exception {
+            String userid = request.getParameter("userid");
 
-        MemberDTO member = memberRepository.selectById(id);
+            String passwd = request.getParameter("passwd");
 
-        if (member == null) {
-            return "false";
-        } else {
-            return "true";
+            String name = request.getParameter("name");
+
+            String email = request.getParameter("email");
+
+            String tel = request.getParameter("tel");
+
+            HashMap<String,String> paraMap = new HashMap<String,String>();
+
+            paraMap.put("userid", userid);
+
+            paraMap.put("passwd", passwd);
+
+            paraMap.put("name", name);
+
+            paraMap.put("email", email);
+
+            paraMap.put("tel", tel);
+
+            int n = service.memberRegister(paraMap);
+
+            String result = "";
+
+            if(n==1)
+
+                result = "회원가입 성공!!";
+
+            else
+
+                result = "회원가입 실패!!";
+
+            mv.addObject("result", result);
+
+            mv.setViewName("memberRegisterResult");
+
+        } catch (Exception e) {
+
+            mv.addObject("error", "회원가입도중 오류가 발생하였습니다");
+
+            mv.setViewName("error");
+
         }
+
+        return "test/memberRegister";
+
     }
 
-    @RequestMapping("/logIn")
-    public String logIn(String id, String pw) throws Exception {
-
-        MemberDTO member = memberRepository.selectById(id);
-        if (Common.getSHA512(pw).equals(member.getPw())) {
-            session.setAttribute("loginId", id);
-            System.out.println("login Success!");
-        } else {
-            System.out.println("login Fail!");
-        }
-
-        return "redirect:/";
-    }
-
-    @RequestMapping("/toMypage")
-    public String toMypage(Model model) throws Exception{
-
-        String loginId = (String) session.getAttribute("loginId");
-        MemberDTO member = memberRepository.selectById(loginId);
-
-        model.addAttribute("member", member);
-
-        return "member/mypage";
-    }
-
-    @RequestMapping("/logout")
-    public String logout(){
-        session.removeAttribute("loginId");
-
-        return "redirect:/";
-    }
-
-    @ExceptionHandler(Exception.class)
-    public String exceptionHandler(Exception e) {
-        e.printStackTrace();
-        return "error";
-    }
 }
